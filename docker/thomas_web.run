@@ -1,0 +1,41 @@
+#!/usr/bin/with-contenv bash
+while true
+do
+A=`ps -ef|grep '../bin/VRVIUA VRVIUA_0'|grep -v grep`
+lss_A=$?
+APID=`ps -ef|grep '../bin/VRVIUA VRVIUA_0'|grep -v grep|awk '{print $2}'`
+B=`ps -ef|grep '../bin/VRVIUB VRVIUB_0'|grep -v grep`
+lss_B=$?
+BPID=`ps -ef|grep '../bin/VRVIUB VRVIUB_0'|grep -v grep|awk '{print $2}'`
+C=`ps -ef|grep '../bin/VRVIUC VRVIUC_0'|grep -v grep`
+lss_C=$?
+CPID=`ps -ef|grep '../bin/VRVIUC VRVIUC_0'|grep -v grep|awk '{print $2}'`
+D=`ps -ef|grep '../bin/VRVIUD VRVIUD_0'|grep -v grep`
+lss_D=$?
+DPID=`ps -ef|grep '../bin/VRVIUD VRVIUD_0'|grep -v grep|awk '{print $2}'`
+
+
+
+if [ $lss_A -ne 0 -o $lss_B -ne 0 -o $lss_C -ne 0 -o  $lss_D -ne 0 ];then
+		if [ -n "$APID" ];then
+			kill -9 $APID
+		fi
+		if [ -n "$BPID" ];then
+			kill -9 $BPID
+		fi
+		if [ -n "$CPID" ];then
+			kill -9 $CPID 
+		fi
+		if [ -n "$DPID" ];then
+			kill -9 $DPID 
+		fi
+		sleep 1
+		cd /app/lss/instance0 && ../bin/VRVIUA VRVIUA_0
+		cd /app/lss/instance0 && ../bin/VRVIUB VRVIUB_0
+		cd /app/lss/instance0 && ../bin/VRVIUC VRVIUC_0
+		cd /app/lss/instance0 && ../bin/VRVIUD VRVIUD_0
+        sleep 3
+else
+        sleep 30
+fi
+done

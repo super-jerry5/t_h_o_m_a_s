@@ -1,0 +1,53 @@
+FROM registry.vrviu.com:5000/cuda:9.1-devel-ubuntu16.04
+RUN sed -i 's/archive.ubuntu/mirrors.163/g' /etc/apt/sources.list
+#RUN rm /etc/apt/sources.list.d/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		ca-certificates \
+		curl \
+		wget \
+		vim \
+		net-tools \
+#		iputils-ping \
+		bzr \
+#		git \
+		gcc \
+		mercurial \
+		subversion \
+		procps \
+		subversion \
+		libcurl4-nss-dev \
+		gnupg2 \
+		dirmngr \
+		bzip2 \
+		unzip \
+		xz-utils \
+		make \
+		tzdata \
+#		ffmpeg \
+        gpac \
+    	strace \
+    	psmisc \
+     && apt-get clean 
+RUN ln -fs /usr/share/zoneinfo/Asia/Harbin /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+ENV LANG C.UTF-8
+COPY s6-overlay-amd64.tar.gz /
+RUN tar xvf /s6-overlay-amd64.tar.gz -C / \
+    && rm s6-overlay-amd64.tar.gz
+
+COPY thomas-init.sh /etc/cont-init.d/
+COPY thomas_web.run /home
+COPY thomas_scheduler.run /home
+RUN mkdir -p /app/thomas &&  mkdir -p /app/scheduler
+COPY servers/thomas/conf/ /app/thomas/
+COPY servers/thomas/static /app/thomas/
+COPY servers/thomas/html /app/thomas/
+COPY servers/thomas/thomas /app/thomas/
+COPY servers/thomas/scheduler /app/scheduler/
+RUN  chmod +x /app/thomas/thomas && chmod +x /app/scheduler/scheduler
+
+COPY servers/lss/public_libs/ffmpeg/ffmpeg_x264_fdk-aac.so.tar.gz /usr/local/lib/
+RUN tar xvf /usr/local/lib/ffmpeg_x264_fdk-aac.so.tar.gz -C /usr/local/
+
+ENV LD_LIBRARY_PATH /usr/local/lib:/usr/lib/nvidia-390:$LD_LIBRARY_PATH
+#EXPOSE 19350 19351
+#ENTRYPOINT ["/init"]

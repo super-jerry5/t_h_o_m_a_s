@@ -1,0 +1,108 @@
+<div class="container">
+
+    <div class="page-header">
+        <h1><small>Task Detail</small></h1>
+    </div>
+
+    <form  id="editForm" class="form-horizontal" role="form" action="/jobinfo/edit" method="post">
+        <input type="hidden" name="Id" value="{{.jobInfo.Id}}">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Task Name:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="name" name="Name" value="{{.jobInfo.Name}}" placeholder="Must" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_url" class="col-sm-2 control-label">Input Url:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="input_url" name="InputUrl" value="{{.jobInfo.InputUrl}}" placeholder="Must" autocomplete="off"/>
+            </div>
+        </div>
+        <div id="cronDiv" class="form-group">
+            <label for="input_url_backup" class="col-sm-2 control-label">Input Url Backup:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="input_url_backup" name="InputUrlBackup" value="{{.jobInfo.InputUrlBackup}}" placeholder="Optional" autocomplete="off" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="output_url" class="col-sm-2 control-label">Output Url:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="output_url" name="OutputUrl" value="{{.jobInfo.OutputUrl}}" placeholder="Must" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="scale" class="col-sm-2 control-label">Scale:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="scale" name="Scale" value="{{.jobInfo.Scale}}" placeholder="Must" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="vcodec_type" class="col-sm-2 control-label">Vcodec Type:</label>
+            <div class="col-sm-4">
+                <div class="radio radio-inline">
+                    <label>
+                        <input disabled type="radio" id="vcodec_type_H264" name="VcodecType" value="0" {{if eq 0 .jobInfo.VcodecType }}  checked  {{end}}/>
+                        H264
+                    </label>
+                </div>
+                <div class="radio radio-inline">
+                    <label>
+                        <input disabled type="radio" id="vcodec_type_H265" name="VcodecType" value="1" {{if eq 1 .jobInfo.VcodecType }}  checked  {{end}} />
+                        H265
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="vcodec_bitrate" class="col-sm-2 control-label">Vcodec Bitrate:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="vcodec_bitrate" name="VcodecBitrate" value="{{.jobInfo.VcodecBitrate}}" placeholder="Must" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="watermark_text" class="col-sm-2 control-label">Watermark Text:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="watermark_text" name="WatermarkText" value="{{.jobInfo.WatermarkText}}" placeholder="Optional" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="watermark_param" class="col-sm-2 control-label">Watermark Param:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="watermark_param" name="WatermarkParam" value="{{.jobInfo.WatermarkParam}}" placeholder="Optional" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="audio_param" class="col-sm-2 control-label">Audio Param:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="audio_param" name="AudioParam" value="{{.jobInfo.AudioParam}}" placeholder="Must" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="gpu_number" class="col-sm-2 control-label">Gpu Number:</label>
+            <div class="col-sm-4">
+                <input type="text"  readonly class="form-control" id="gpu_number" name="GpuNumber" value="{{.jobInfo.GpuNumber}}" placeholder="Must" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="vcodec_type" class="col-sm-2 control-label">Gpu Deint:</label>
+            <div class="col-sm-4">
+                <div class="checkbox checkbox-inline">
+                    <label>
+                        <input disable type="checkbox" id="gpu_deint" name="GpuDeint" value="1" {{if eq 1 .jobInfo.GpuDeint }}  checked  {{end}} />
+                        Gpu Deint
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+
+                <a id="backBtn" href="javascript:window.history.go(-1);" style="margin-left: 50px;">
+                    返回
+                </a>
+            </div>
+        </div>
+    </form>
+
+</div>
