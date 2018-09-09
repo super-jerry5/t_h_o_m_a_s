@@ -8,13 +8,19 @@ import (
 	"thomas/entity"
 	"runtime"
 	"github.com/astaxie/beego/logs"
+	import _ "github.com/astaxie/beego/config/ini"
 )
 
 
 func init() {
+	ini, err := NewConfig("ini", "conf/app.conf")
+	if err != nil {
+		t.Fatal(err)
+	}
+	mysql_string := ini.String("mysql_string")
 	logs.SetLogger("console")
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", "root:root123@/d_live_transcode?charset=utf8&loc=Local")
+	orm.RegisterDataBase("default", "mysql", mysql_string)
 	orm.RegisterModel(&entity.JobInfo{})
 
 }

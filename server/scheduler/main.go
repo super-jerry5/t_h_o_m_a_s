@@ -9,18 +9,25 @@ import (
 	"time"
 	"runtime"
 	"github.com/astaxie/beego/logs"
-	//"errors"
+	import _ "github.com/astaxie/beego/config/ini"
 )
 
 var g_max_update_interval_s int64 = 30
 
 func init() {
+	
+	ini, err := NewConfig("ini", "conf/scheduler.conf")
+	if err != nil {
+		t.Fatal(err)
+	}
+	mysql_string := ini.String("mysql_string")
+	g_max_update_interval_s = ini.Int64("max_update_interval_s")
 	logs.SetLogger("console")
-	//logs.EnableFuncCallDepth(true)
 	logs.SetLogFuncCall(true)
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", "root:root123@/d_live_transcode?charset=utf8&loc=Local")
+	orm.RegisterDataBase("default", "mysql", mysql_string)
 	orm.RegisterModel(&entity.JobInfo{})
+	
 
 }
 

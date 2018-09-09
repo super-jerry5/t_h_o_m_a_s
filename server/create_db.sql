@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS d_live_transcode;
-CREATE DATABASE d_live_transcode;
+DROP DATABASE IF EXISTS d_thomas;
+CREATE DATABASE d_thomas;
 
-DROP TABLE IF EXISTS `d_live_transcode`.`job_info`;
-CREATE TABLE `d_live_transcode`.`job_info` (
+DROP TABLE IF EXISTS `d_thomas`.`job_info`;
+CREATE TABLE `d_thomas`.`job_info` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `input_url` varchar(2048) COLLATE utf8mb4_bin NOT NULL,
