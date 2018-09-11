@@ -1,0 +1,56 @@
+#complie & deploy middle file
+/thomas-init.sh
+/Dockerfile.thomas
+/s6-overlay-amd64.tar.gz
+/server/scheduler/scheduler
+/server/server
+/thomas.finish
+/thomas_scheduler.run
+/thomas_web.run
+/ffmpeg/ffmpeg_build/*
+/deploy/*
+/ffmpeg/ffmpeg-4.0.2/doc/*
+ffmpeg/ffmpeg-4.0.2/ffbuild/config.log
+
+#ffmpeg debug 
+ffmpeg_g
+ffprobe_g
+ffprobe
+ffmpeg
+
+#pc&version of ffmpeg
+*.pc
+*.version
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app

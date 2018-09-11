@@ -1,13 +1,13 @@
 #!/bin/bash
 
 go build
-cp thomas ../deploy/web/
-cp conf ../deploy/web/
-cp static ../deploy/web/
-cp html ../deploy/web
+cp server ../deploy/web/thomas
+cp -rf conf ../deploy/web/
+cp -rf static ../deploy/web/
+cp -rf html ../deploy/web
 
 cd scheduler 
 go build
-cp scheduler ../../deploy/scheduler
-cp conf ../../deploy/scheduler/
+cp scheduler ../../deploy/scheduler/
+cp -rf conf ../../deploy/scheduler/
 

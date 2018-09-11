@@ -9,26 +9,27 @@ import (
 	"time"
 	"runtime"
 	"github.com/astaxie/beego/logs"
-	import _ "github.com/astaxie/beego/config/ini"
+	config "github.com/astaxie/beego/config"
 )
 
 var g_max_update_interval_s int64 = 30
 
 func init() {
-	
-	ini, err := NewConfig("ini", "conf/scheduler.conf")
+	ini, err := config.NewConfig("ini", "conf/scheduler.conf")
 	if err != nil {
-		t.Fatal(err)
+		panic(err)
 	}
 	mysql_string := ini.String("mysql_string")
-	g_max_update_interval_s = ini.Int64("max_update_interval_s")
-	logs.SetLogger("console")
+	max_update_interval_s, err := ini.Int64("max_update_interval_s")
+	if err != nil  {
+		panic(err)
+	}
+	g_max_update_interval_s = max_update_interval_s
+        logs.SetLogger(logs.AdapterFile,`{"filename":"/data/logs/scheduler/scheduler.log","level":7,"maxlines":0,"maxsize":0,"daily":true,"maxdays":10}`)
 	logs.SetLogFuncCall(true)
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", mysql_string)
 	orm.RegisterModel(&entity.JobInfo{})
-	
-
 }
 
 
@@ -41,7 +42,6 @@ func ProcessStop(worker string, mapJobSelf map[int]*entity.JobInfo, mapJobDb map
 	} else {
 		logs.Debug("FindStopTask succ, mapStopJob_size:%d", len(mapStopJob))
 	}
-	
 	for id, job := range mapStopJob {
 		if ff, ok := mapFf[id]; ok {
 			err := StopFfmpeg(ff)

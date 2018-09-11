@@ -10,10 +10,10 @@ mkdir -p deploy/scheduler
 mkdir -p deploy/ffmpeg
 echo "make deploy path succ"
 
-cd ffmpeg 
-./auto_make.sh
-cd  ../
-echo "make ffmpeg succ"
+#cd ffmpeg 
+#./auto_make.sh
+#cd  ../
+#echo "make ffmpeg succ"
 
 cd server
 ./auto_make.sh

@@ -8,18 +8,19 @@ import (
 	"thomas/entity"
 	"runtime"
 	"github.com/astaxie/beego/logs"
-	import _ "github.com/astaxie/beego/config/ini"
+	config "github.com/astaxie/beego/config"
 )
 
 
 func init() {
-	ini, err := NewConfig("ini", "conf/app.conf")
+	ini, err := config.NewConfig("ini", "conf/app.conf")
 	if err != nil {
-		t.Fatal(err)
+		panic(err)
 	}
 	mysql_string := ini.String("mysql_string")
-	logs.SetLogger("console")
-	orm.RegisterDriver("mysql", orm.DRMySQL)
+	logs.SetLogger(logs.AdapterFile,`{"filename":"/data/logs/thomas/thomas.log","level":7,"maxlines":0,"maxsize":0,"daily":true,"maxdays":10}`)
+	logs.SetLogFuncCall(true)
+ 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", mysql_string)
 	orm.RegisterModel(&entity.JobInfo{})
 
@@ -32,7 +33,6 @@ func main()  {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	orm.Debug = true
 	// TODO Init jobList
-	
 	// set home  path
 	beego.Router("/",&controller.IndexController{},"get:Index")
 
@@ -45,7 +45,6 @@ func main()  {
 	beego.Router("/jobinfo/delete",&controller.JobInfoManagerController{},"post:Delete")
 	beego.Router("/jobinfo/info",&controller.JobInfoManagerController{},"get:Info")
 	beego.Router("/jobinfo/operate",&controller.JobInfoManagerController{},"*:Operate")
-	
 	//about
 	beego.Router("/about",&controller.AboutController{},"*:Index")
 

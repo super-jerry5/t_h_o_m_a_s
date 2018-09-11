@@ -1,2 +1,2 @@
 #!/usr/bin/with-contenv bash
-cd /app/stream_dispatch && ./stream_dispatch
+cd /app/scheduler && ./scheduler
