@@ -119,7 +119,7 @@ func MakeFfmpegCmd(job *entity.JobInfo)(string, error) {
 	cmd = cmd + "-f flv " + job.OutputUrl
 	
 	//TODO: remove the debug cmd
-	cmd = "ffmpeg -identifier " + strconv.Itoa(job.Id) + " -re -i ~/Movies/chiji_7.5M_repeat10.mp4 -s 960x540 -acodec copy -vcodec libx264 -b 60000 -f flv rtmp://10.86.0.101:1935/live/720p_540p"
+	//cmd = "ffmpeg -identifier " + strconv.Itoa(job.Id) + " -re -i ~/Movies/chiji_7.5M_repeat10.mp4 -s 960x540 -acodec copy -vcodec libx264 -b 60000 -f flv rtmp://10.86.0.101:1935/live/720p_540p"
 	logs.Info("MakeFfmpegCmd succ, cmd:%s", cmd)
 	return cmd, nil
 }

@@ -13,7 +13,8 @@ import (
 )
 
 var g_max_update_interval_s int64 = 30
-
+var g_gpu_count int = 1
+var g_hw_decoder string = "h264_cuvid"
 func init() {
 	ini, err := config.NewConfig("ini", "conf/scheduler.conf")
 	if err != nil {
@@ -21,11 +22,20 @@ func init() {
 	}
 	mysql_string := ini.String("mysql_string")
 	max_update_interval_s, err := ini.Int64("max_update_interval_s")
-	if err != nil  {
-		panic(err)
+	if err == nil  {
+		g_max_update_interval_s = max_update_interval_s
 	}
-	g_max_update_interval_s = max_update_interval_s
-        logs.SetLogger(logs.AdapterFile,`{"filename":"/data/logs/scheduler/scheduler.log","level":7,"maxlines":0,"maxsize":0,"daily":true,"maxdays":10}`)
+	gpu_count, err := ini.Int("gpu_count)
+	if err == nil {
+		g_gpu_count = gpu_count
+	}
+	
+	hw_decoder := ini.String("hardware_decoder")
+	if hw_decoder != nil {
+		g_hw_decoder = hw_decoder
+	}
+	
+	logs.SetLogger(logs.AdapterFile,`{"filename":"/data/logs/scheduler/scheduler.log","level":7,"maxlines":0,"maxsize":0,"daily":true,"maxdays":10}`)
 	logs.SetLogFuncCall(true)
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", mysql_string)
